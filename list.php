@@ -12,8 +12,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 } elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
     if (isset($_GET['page'])) {
         $page = (int)$_GET['page'];
+        $name = htmlspecialchars($_GET["name"], ENT_QUOTES, 'UTF-8');
     } else {
         $page = 1;
+        $name = htmlspecialchars($_GET["name"], ENT_QUOTES, 'UTF-8');
     }
 
     // スタートのポジションを計算する
@@ -92,9 +94,10 @@ try{
 <div>
     <p>現在 <?php echo $page; ?> ページ目です。</p>
 <?php
-   $page_num = $dbh->prepare("SELECT COUNT(*) id FROM user");
-   $page_num->execute();
-   $page_num = $page_num->fetchColumn();
+    $stmt = $dbh->prepare("SELECT COUNT(*) id FROM user WHERE name like :name");
+    $stmt->bindValue(':name', '%'.$name.'%', PDO::PARAM_STR);
+    $stmt->execute();
+    $page_num = $stmt->fetchColumn();
    // ページネーションの数を取得する
    $pagination = ceil($page_num / MAXITEM);
 ?>
@@ -104,7 +107,7 @@ try{
 	      echo $x;
       } else {
           echo ' ';
-	      echo '<a href=?page='. $x. '>'. $x. '</a>';
+	      echo '<a href=?page='. $x. '&name='. $name.'>'. $x. '</a>';
 	      echo ' ';
 	  }
    }
