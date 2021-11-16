@@ -64,7 +64,7 @@ try{
     </header>
 </div>
 <hr>
-<p><?php echo $count;?>件見つかりました。</p>
+<p><?php echo $count;?>件表示</p>
 <table border=1>
     <tr><th>id</th><th>名前</th><th>メールアドレス</th><th>性別</th></tr>
     <?php foreach($data as $row): ?>
