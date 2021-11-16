@@ -87,7 +87,7 @@ try{
     <?php endforeach; ?>
 </table>
 <p style="margin:8px;">
-<form action="" method="POST">
+<form action="" method="GET">
 
 <div>
     <p>現在 <?php echo $page; ?> ページ目です。</p>
